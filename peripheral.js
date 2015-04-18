@@ -10,7 +10,6 @@ module.exports = function (opts) {
   var stream = duplex(outgoing, incoming)
   bleno.on('stateChange', function(state) {
     if (state === 'poweredOn') {
-      console.error('advertising...')
       bleno.startAdvertising('BLEStream', [streamService.uuid], function(err) {
         if (err) return stream.destroy(err)
       })
