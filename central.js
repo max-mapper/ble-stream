@@ -2,6 +2,7 @@ var noble = require('noble')
 var from = require('from2')
 var through = require('through2')
 var duplexify = require('duplexify')
+var debug = require('debug')('ble-central-stream')
 
 var MAX = 256
 
@@ -39,7 +40,7 @@ function createStream (id) {
 
   var ready = function (ch) {
     var input = through.obj(function (data, enc, cb) {
-      console.error('writing', data, data.length)
+      debug('onwrite', {length: data.length})
       var offset = -MAX
       var loop = function (err) {
         if (err) return cb(err)
@@ -56,8 +57,9 @@ function createStream (id) {
       setTimeout(function () {
         ch.read(function (err, data) {
           if (err) return cb(err)
+          if (!data) return cb(null, null)
           timeout = data.length === 100 ? 1 : 200
-          console.error('read', data, data.length)
+          debug('onread', {length: data.length})
           cb(null, data)
         })
       }, timeout)
