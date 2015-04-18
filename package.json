@@ -1,6 +1,6 @@
 {
   "name": "ble-stream",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "experimental duplex stream api over bluetooth low energy connections (BLE)",
   "main": "index.js",
   "scripts": {
